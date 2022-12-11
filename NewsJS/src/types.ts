@@ -7,4 +7,4 @@ export type getRespData = {
     options?: loaderOptions;
 };
 
-export type callback<T> = (data?: T) => void;
+export type callback<T> = (data: T) => void;

@@ -1,4 +1,3 @@
-import { sourceView } from '../../interfaces';
 import { callback, getRespData, loaderOptions } from '../../types';
 
 class Loader {
@@ -9,9 +8,9 @@ class Loader {
         this.options = options;
     }
 
-    public getResp(
+    public getResp<T>(
         { endpoint, options = {} }: getRespData,
-        callback: callback<sourceView> = () => {
+        callback: callback<T> = () => {
             console.error('No callback for GET response');
         }
     ) {
@@ -39,11 +38,11 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    private load(method: string, endpoint: string, callback: callback<sourceView>, options: loaderOptions = {}) {
+    private load<T>(method: string, endpoint: string, callback: callback<T>, options: loaderOptions = {}) {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json())
-            .then((data: sourceView) => callback(data))
+            .then((data: T) => callback(data))
             .catch((err) => console.error(err));
     }
 }

@@ -1,8 +1,10 @@
+import { LAST_INDEX, START } from '../../constants';
+import { StatusErrors } from '../../enums';
 import { callback, getRespData, loaderOptions } from '../../types';
 
 class Loader {
-    readonly baseLink: string;
-    readonly options: loaderOptions;
+    private readonly baseLink: string;
+    private readonly options: loaderOptions;
     constructor(baseLink: string, options: loaderOptions) {
         this.baseLink = baseLink;
         this.options = options;
@@ -19,7 +21,7 @@ class Loader {
 
     private errorHandler(res: Response): Response | never {
         if (!res.ok) {
-            if (res.status === 401 || res.status === 404)
+            if (res.status === StatusErrors.unauthorized || res.status === StatusErrors.notFound)
                 console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
             throw Error(res.statusText);
         }
@@ -35,7 +37,7 @@ class Loader {
             url += `${key}=${urlOptions[key]}&`;
         });
 
-        return url.slice(0, -1);
+        return url.slice(START, LAST_INDEX);
     }
 
     private load<T>(method: string, endpoint: string, callback: callback<T>, options: loaderOptions = {}) {

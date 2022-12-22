@@ -1,26 +1,26 @@
-export interface source {
+export interface Source {
     id: string;
     name: string;
 }
 
-export interface news {
+export interface NewsData {
     author: string;
     content: string;
     description: string;
     publishedAt: string;
-    source: source;
+    source: Source;
     title: string;
     url: string;
     urlToImage: string;
 }
 
-export interface sourceView {
-    sources: source[];
+export interface SourceView {
+    sources: Source[];
     status: string;
 }
 
-export interface newsView {
-    articles: news[];
+export interface NewsView {
+    articles: NewsData[];
     status: string;
     totalResults: number;
 }

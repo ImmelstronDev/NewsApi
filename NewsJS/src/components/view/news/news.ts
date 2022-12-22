@@ -1,9 +1,10 @@
-import { news } from '../../../interfaces';
+import { MAX_NEWS, SEPARATOR, START } from '../../../constants';
+import { NewsData } from '../../../interfaces';
 import './news.css';
 
 class News {
-    draw(data: news[]) {
-        const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
+    draw(data: NewsData[]) {
+        const news = data.length >= MAX_NEWS ? data.filter((_item, idx) => idx < MAX_NEWS) : data;
 
         const fragment = document.createDocumentFragment();
         const newsItemTemp = <HTMLTemplateElement>document.querySelector('#newsItemTemp');
@@ -19,10 +20,10 @@ class News {
             (newsClone.querySelector('.news__meta-author') as HTMLElement).textContent =
                 item.author || item.source.name;
             (newsClone.querySelector('.news__meta-date') as HTMLElement).textContent = item.publishedAt
-                .slice(0, 10)
-                .split('-')
+                .slice(START, MAX_NEWS)
+                .split(SEPARATOR)
                 .reverse()
-                .join('-');
+                .join(SEPARATOR);
 
             (newsClone.querySelector('.news__description-title') as HTMLElement).textContent = item.title;
             (newsClone.querySelector('.news__description-source') as HTMLElement).textContent = item.source.name;
